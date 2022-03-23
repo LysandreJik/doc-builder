@@ -22,11 +22,6 @@ jobs:
       huggingface/transformers-doc-builder
 
     steps:
-      - name: Echo
-        run: |
-          echo ${{ inputs.pr_number }}
-          echo ${{ toJSON(inputs) }}
-
       - uses: actions/checkout@v2
         with:
           repository: 'lysandrejik/doc-builder'
