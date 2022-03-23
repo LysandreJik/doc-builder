@@ -86,6 +86,7 @@ jobs:
           cd doc-build-dev
           git pull
           rm -rf ${{ inputs.package }}/pr_${{ inputs.pr_number }}
+          ls ../build_dir/${{ inputs.package }}
           mv ../build_dir/${{ inputs.package }}/pr_${{ inputs.pr_number }} ${{ inputs.package }}/pr_${{ inputs.pr_number }}
           git status
 
