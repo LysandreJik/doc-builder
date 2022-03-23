@@ -21,29 +21,29 @@ jobs:
   build_main_documentation:
     runs-on: ubuntu-latest
     container:
-      LysandreJik/transformers-doc-builder
+      lysandrejik/transformers-doc-builder
 
     steps:
       - uses: actions/checkout@v2
         with:
-          repository: 'LysandreJik/doc-builder'
+          repository: 'lysandrejik/doc-builder'
           path: doc-builder
         
       - uses: actions/checkout@v2
         with:
-          repository: 'LysandreJik/${{ inputs.package }}'
+          repository: 'lysandrejik/${{ inputs.package }}'
           path: ${{ inputs.package }}
       
       - uses: actions/checkout@v2
         with:
-          repository: 'LysandreJik/doc-build'
+          repository: 'lysandrejik/doc-build'
           path: doc-build
           token: ${{ secrets.token }}
       
       - uses: actions/checkout@v2
         if: inputs.notebook_folder != ''
         with:
-          repository: 'LysandreJik/notebooks'
+          repository: 'lysandrejik/notebooks'
           path: notebooks
           token: ${{ secrets.token }}
 
@@ -115,7 +115,7 @@ jobs:
 
           if [[ `git status --porcelain` ]]; then 
             git add .
-            git commit -m "Updated with commit ${{ inputs.commit_sha }} See: https://github.com/LysandreJik/${{ inputs.package }}/commit/${{ inputs.commit_sha }}"
+            git commit -m "Updated with commit ${{ inputs.commit_sha }} See: https://github.com/lysandrejik/${{ inputs.package }}/commit/${{ inputs.commit_sha }}"
             git push origin main ||
             (echo "Failed on the first try, rebasing and pushing again" && git pull --rebase && git push origin main) ||
             (echo "Failed on the second try, rebasing and pushing again" && git pull --rebase && git push origin main)
@@ -135,7 +135,7 @@ jobs:
             git status
             if [[ `git status --porcelain` ]]; then
               git add ${{ inputs.notebook_folder }}
-              git commit -m "Updated ${{ inputs.package }} doc notebooks with commit ${{ inputs.commit_sha }} \n\nSee: https://github.com/LysandreJik/${{ inputs.package }}/commit/${{ inputs.commit_sha }}"
+              git commit -m "Updated ${{ inputs.package }} doc notebooks with commit ${{ inputs.commit_sha }} \n\nSee: https://github.com/lysandrejik/${{ inputs.package }}/commit/${{ inputs.commit_sha }}"
               git push origin master ||
               (echo "Failed on the first try, rebasing and pushing again" && git pull --rebase && git push origin master) ||
               (echo "Failed on the second try, rebasing and pushing again" && git pull --rebase && git push origin master)
