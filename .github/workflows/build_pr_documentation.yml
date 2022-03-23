@@ -84,6 +84,7 @@ jobs:
           git pull
           rm -rf ${{ inputs.package }}/pr_${{ inputs.pr_number }}
           ls ../build_dir/${{ inputs.package }}
+          mkdir -p ${{ inputs.package }}
           mv ../build_dir/${{ inputs.package }}/pr_${{ inputs.pr_number }} ${{ inputs.package }}/pr_${{ inputs.pr_number }}
           git status
 
