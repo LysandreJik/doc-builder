@@ -25,7 +25,7 @@ jobs:
       - name: Echo
         run: |
           echo ${{ inputs.pr_number }}
-          echo ${{ inputs }}
+          echo ${{ toJSON(inputs) }}
 
       - uses: actions/checkout@v2
         with:
