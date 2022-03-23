@@ -21,7 +21,7 @@ jobs:
   build_main_documentation:
     runs-on: ubuntu-latest
     container:
-      lysandrejik/transformers-doc-builder
+      huggingface/transformers-doc-builder
 
     steps:
       - uses: actions/checkout@v2
@@ -36,17 +36,10 @@ jobs:
       
       - uses: actions/checkout@v2
         with:
-          repository: 'lysandrejik/doc-build'
+          repository: 'huggingface/doc-build'
           path: doc-build
           token: ${{ secrets.token }}
       
-      - uses: actions/checkout@v2
-        if: inputs.notebook_folder != ''
-        with:
-          repository: 'lysandrejik/notebooks'
-          path: notebooks
-          token: ${{ secrets.token }}
-
       - uses: actions/setup-node@v2
         with:
           node-version: '16'
@@ -125,23 +118,4 @@ jobs:
 
           cd ..
 
-          if [ -z "${{ inputs.notebook_folder }}" ]
-          then
-            echo "Notebooks creation was not enabled."
-          else
-            cd notebooks
-            git pull
-            cp -r ../notebook_dir/. ${{ inputs.notebook_folder }}
-            git status
-            if [[ `git status --porcelain` ]]; then
-              git add ${{ inputs.notebook_folder }}
-              git commit -m "Updated ${{ inputs.package }} doc notebooks with commit ${{ inputs.commit_sha }} \n\nSee: https://github.com/lysandrejik/${{ inputs.package }}/commit/${{ inputs.commit_sha }}"
-              git push origin master ||
-              (echo "Failed on the first try, rebasing and pushing again" && git pull --rebase && git push origin master) ||
-              (echo "Failed on the second try, rebasing and pushing again" && git pull --rebase && git push origin master)
-            else
-              echo "No diff in the notebooks."
-            fi
-            cd ..
-          fi
         shell: bash
