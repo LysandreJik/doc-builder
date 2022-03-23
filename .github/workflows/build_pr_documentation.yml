@@ -23,7 +23,9 @@ jobs:
 
     steps:
       - name: Echo
-        run: echo ${{ inputs.pr_number }}
+        run: |
+          echo ${{ inputs.pr_number }}
+          echo ${{ inputs }}
 
       - uses: actions/checkout@v2
         with:
